@@ -1,0 +1,1 @@
+{"name": "chrome_commucation", "description": "native messaging host", "path": "D:\\code\\chrome_console\\cc\\cc.bat", "type": "stdio", "allowed_origins": ["chrome-extension://mfepiakbogcbfhkcmjdaiaocfnjlghdf/"]}

@@ -1,0 +1,44 @@
+2021-08-20 17:11:27.845182
+complete send message: b'\x00\x00\x00={"uuid":"last_server","type":"new_server_come_in","param":""}'
+2021-08-20 17:11:28.048638
+server bind!
+2021-08-20 17:12:45.529417
+Traceback (most recent call last):
+  File "D:\code\chrome_console\cc\\cc_server.py", line 106, in get_msg_from_cc_plugin
+    msg = cc_ext.getMessage()
+  File "D:\code\chrome_console\cc\cc_server_ext.py", line 12, in getMessage
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\code\chrome_console\cc\\cc_server.py", line 19, in write_cc_log
+    f.write(strTime+'\n'+msg+'\n')
+TypeError: can only concatenate str (not "NoneType") to str
+
+2021-08-20 17:12:45.538781
+Traceback (most recent call last):
+  File "D:\code\chrome_console\cc\\cc_server.py", line 215, in cc_plugin_listen_service
+    if jsonMsg['uuid'] == 'last_server' and jsonMsg['type'] == 'new_server_come_in':
+KeyError: 'uuid'
+
+2021-08-20 17:12:45.539745
+server unbind!
+2021-08-20 17:12:45.542738
+Traceback (most recent call last):
+  File "D:\code\chrome_console\cc\\cc_server.py", line 244, in udp_client_listen_service
+    jsonMsg, clientAddr = self._msg_engine.get_udp_msg()
+  File "D:\code\chrome_console\cc\\cc_server.py", line 70, in get_udp_msg
+    data, clientAddr = self._server.recvfrom(65535)
+OSError: [WinError 10038] 在一个非套接字上尝试了一个操作。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\code\chrome_console\cc\\cc_server.py", line 19, in write_cc_log
+    f.write(strTime+'\n'+msg+'\n')
+TypeError: can only concatenate str (not "NoneType") to str
+
+2021-08-20 17:12:45.542738
+server unbind!
