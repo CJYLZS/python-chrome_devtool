@@ -110,7 +110,6 @@ class cc_func:
         self.__msg_engine.send_udp_msg(self.__client, msg_to_send, self.__serverAddr)
     
     def execute_js(self, code):
-        code = 'try{%s}catch(e){console.log(e.stack);}'%code
         self.send_msg_to_server('client_execute_js',code)
     
     def get_msg_from_server(self, timeout = 0):

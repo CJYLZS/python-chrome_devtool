@@ -1,9 +1,4 @@
 console.log('cc_plugin background!');
-global_msg = {
-    'uuid':'',
-    'type':'',
-    'param':''
-}
 let portToNative = chrome.runtime.connectNative("chrome_commucation");
 
 function SendMsgToContent(tabId, msg) {
@@ -11,15 +6,8 @@ function SendMsgToContent(tabId, msg) {
 }
 
 function execute_js(msg){
-    
     chrome.tabs.query({active:true},(tabs)=>{
-        global_msg.uuid = msg.uuid;
-        global_msg.type = 'set_uuid'
-        global_msg.param = msg.uuid
-        chrome.tabs.sendMessage(tabs[0].id, global_msg);
-        chrome.tabs.executeScript(
-            tabs[0].id,
-            {code:msg['param']});
+            chrome.tabs.sendMessage(tabs[0].id, msg);
     });
 }
 
@@ -35,7 +23,7 @@ portToNative.onMessage.addListener((response) => {
 
 chrome.runtime.onConnect.addListener(
 function (ScriptPort) {
-    console.log("Connected with " + ScriptPort.sender.url);
+    // console.log("Connected with " + ScriptPort.sender.url);
     ScriptPort.onMessage.addListener((msg) =>{
         // console.log("FromScript: " + JSON.stringify(msg));
         portToNative.postMessage(msg);
