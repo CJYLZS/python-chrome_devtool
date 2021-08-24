@@ -69,6 +69,7 @@ window.addEventListener('message',(event)=>{
             global_msg.param = eval(event.data.param);
         }catch(e){
             global_msg.param = e.stack;
+            console.error(e.stack);
         }
         global_msg.type = 'client_execute_js_result';
         if(!global_msg.param)

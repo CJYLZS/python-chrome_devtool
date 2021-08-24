@@ -109,9 +109,32 @@ class cc_func:
         msg_to_send['param'] = param
         self.__msg_engine.send_udp_msg(self.__client, msg_to_send, self.__serverAddr)
     
-    def execute_js(self, code):
-        self.send_msg_to_server('client_execute_js',code)
+    def execute_js(self, code, page_url = ''):
+        # execute js in page which contain page_url
+        # if not page_url then execute in active page
+        '''
+        javascript code will execute in top page environment
+        return statement, console.log statement, and error stack info will be show back
+        code will execute like this
+        (()=>{
+            // you code will execute in top window context
+            console.log(1,2,3);// [1,2,3] will be show local
+            return {a:1,b:'123'};// {a:1,b:'123'} 
+        })();
+        '''
+        self.send_msg_to_server('client_execute_js',{'page_url':page_url,'code':code})
     
+    def execute_js_from_file(self, filename, page_url = ''):
+        # execute js in page which contain page_url
+        # if not page_url then execute in active page
+        try:
+            code = open(filename, 'r').read()
+        except:
+            # open file failed
+            code = 'return "open file %s failed";'%filename
+            write_cc_log(traceback.print_exc())
+        self.execute_js(code, page_url)
+            
     def get_msg_from_server(self, timeout = 0):
         msg = {}
         if timeout <= 0:

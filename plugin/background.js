@@ -6,9 +6,28 @@ function SendMsgToContent(tabId, msg) {
 }
 
 function execute_js(msg){
-    chrome.tabs.query({active:true},(tabs)=>{
+    if(msg.param.page_url){
+        // execuet js in first page which found by url
+        chrome.tabs.query({},(tabs)=>{
+            let i = 0;
+            for(; i<tabs.length; i++){
+                if(tabs[i].url.indexOf(msg.param.page_url)!=-1){
+                    msg.param = msg.param.code; // content js only need js code
+                    chrome.tabs.sendMessage(tabs[i].id, msg);
+                    break;
+                }
+            }
+            if(i == tabs.length){
+                console.error(msg.param.page_url, 'not page found!');
+            }
+        });
+    }
+    else{
+        // if not refer url then execute js in active page
+        chrome.tabs.query({active:true},(tabs)=>{
             chrome.tabs.sendMessage(tabs[0].id, msg);
-    });
+        });
+    }
 }
 
 portToNative.onMessage.addListener((response) => {
